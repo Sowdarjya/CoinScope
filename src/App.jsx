@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Home from "./pages/home";
 import CryptoCurrencies from "./pages/CryptoCurrencies";
 import News from "./pages/News";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/cryptos" element={<CryptoCurrencies />} />
         <Route path="/news" element={<News />} />
       </Routes>
+      <Footer />
     </>
   );
 };
