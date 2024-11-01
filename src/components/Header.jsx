@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="navbar bg-[#0A0A0A]">
+    <header className="navbar bg-transparent">
       <div className="navbar-start text-3xl text-[#faed26] font-bold">
         <Link to="/">CoinScope</Link>
       </div>
