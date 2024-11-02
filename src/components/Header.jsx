@@ -2,49 +2,45 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
+  const navItems = [
+    {
+      id: 1,
+      name: "Home",
+      slug: "/",
+    },
+    {
+      id: 2,
+      name: "Cryptos",
+      slug: "/cryptos",
+    },
+    {
+      id: 3,
+      name: "News",
+      slug: "/news",
+    },
+  ];
+
   return (
-    <header className="navbar bg-transparent">
-      <div className="navbar-start text-3xl text-[#faed26] font-bold">
+    <header className="navbar bg-[#faed26]">
+      <div className="navbar-start text-3xl text-[#121111] font-bold">
         <Link to="/">CoinScope</Link>
       </div>
       <nav className="navbar-end">
         <ul className="flex items-center justify-between">
-          <li>
-            <NavLink
-              to="/"
-              className={(e) => {
-                return e.isActive
-                  ? "text-[#faed26] p-2 text-xl mx-4 hover:text-[#f7f192]"
-                  : "p-2 text-xl mx-4 hover:text-[#f7f192]";
-              }}
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/cryptos"
-              className={(e) => {
-                return e.isActive
-                  ? "text-[#faed26] p-2 text-xl mx-4 hover:text-[#f7f192]"
-                  : "p-2 text-xl mx-4 hover:text-[#f7f192]";
-              }}
-            >
-              Cryptos
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/news"
-              className={(e) => {
-                return e.isActive
-                  ? "text-[#faed26] p-2 text-xl mx-4 hover:text-[#f7f192]"
-                  : "p-2 text-xl mx-4 hover:text-[#f7f192]";
-              }}
-            >
-              News
-            </NavLink>
-          </li>
+          {navItems.map((item) => (
+            <li key={item.id}>
+              <NavLink
+                className={(e) => {
+                  return e.isActive
+                    ? "text-[#faed26] mx-3 bg-[#121111] p-2 rounded-xl text-lg font-medium"
+                    : "text-[#121111] mx-3 text-lg hover:text-[#525252] font-medium";
+                }}
+                to={`${item.slug}`}
+              >
+                {item.name}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </nav>
     </header>
