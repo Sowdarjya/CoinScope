@@ -12,7 +12,6 @@ const Carousel = () => {
       );
       const data = await res.json();
       setTrendingCoins(data);
-      console.log("trending>>>", trendingCoins);
     } catch (error) {
       console.error(error);
     }
@@ -23,17 +22,19 @@ const Carousel = () => {
   }, []);
 
   return (
-    <div className="mt-6 flex items-center justify-center bg-[#faed26] p-2 rounded-lg">
-      <Marquee>
-        <div className="flex gap-6">
+    <div className="mt-6 flex items-center justify-center p-2 rounded-lg w-3/4">
+      <Marquee className="bg-[#faed26] p-2 rounded-xl">
+        <div className="flex">
           {trendingCoins.length > 0 ? (
             trendingCoins.map((coin) => (
-              <Link key={coin.id}>
+              <Link key={coin.id} className="mx-4">
                 <img src={coin.image} className="h-10" />
               </Link>
             ))
           ) : (
-            <p className="font-medium text-center text-2xl">Loading</p>
+            <p className="font-medium text-center text-2xl text-[#121111]">
+              Loading
+            </p>
           )}
         </div>
       </Marquee>

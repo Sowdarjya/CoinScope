@@ -6,8 +6,8 @@ import Carousel from "./Carousel";
 const Hero = () => {
   return (
     <>
-      <main className="flex items-center justify-around w-full h-[80vh]">
-        <div className="w-[55%] text-center  flex flex-col items-center justify-center">
+      <main className="flex items-center justify-around w-full h-screen">
+        <div className="w-[60%] text-center  flex flex-col items-center justify-center">
           <h1 className="text-6xl mb-4 font-semibold text-[#faed26]">
             All Your Coins <br /> One Tracker
           </h1>
@@ -21,7 +21,7 @@ const Hero = () => {
           </div>
           <Carousel />
         </div>
-        <div className="w-[45%]  flex items-center justify-center">
+        <div className="w-[40%]  flex items-center justify-start">
           <img src={`${heroImg}`} className="h-[20rem]" />
         </div>
       </main>
