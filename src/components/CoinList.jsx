@@ -25,15 +25,15 @@ const CoinList = () => {
   }, []);
 
   return (
-    <div className="grid">
+    <div className="grid gap-4 grid-cols-3 grid-rows-3 p-8">
       {coinList.map((coin) => (
-        <Link key={coin.id} className="grid">
-          <div className="card card-compact bg-base-100  shadow-xl">
+        <Link key={coin.id}>
+          <div className="card card-side bg-base-100 shadow-xl p-4">
             <figure>
-              <img src={coin.image} className="h-8" />
+              <img src={coin.image} className="h-10" />
             </figure>
             <div className="card-body">
-              <h2 className="card-title"> {coin.name} </h2>
+              <p className="card-title"> {coin.name} </p>
             </div>
           </div>
         </Link>
