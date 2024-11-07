@@ -1,7 +1,12 @@
 import React from "react";
+import CoinList from "../components/CoinList";
 
 const CryptoCurrencies = () => {
-  return <div>CryptoCurrencies</div>;
+  return (
+    <div>
+      <CoinList />
+    </div>
+  );
 };
 
 export default CryptoCurrencies;
