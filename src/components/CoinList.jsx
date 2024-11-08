@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import millify from "millify";
 
 const CoinList = () => {
   const [coinList, setCoinList] = useState([]);
@@ -7,13 +8,12 @@ const CoinList = () => {
   const fetchCoinList = async () => {
     try {
       const res = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false`
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false`
       );
 
       const data = await res.json();
 
       setCoinList(data);
-      console.log(data);
       console.log("state>>>", coinList);
     } catch (error) {
       console.error(error);
@@ -28,12 +28,26 @@ const CoinList = () => {
     <div className="grid gap-4 grid-cols-3 grid-rows-3 p-8">
       {coinList.map((coin) => (
         <Link key={coin.id}>
-          <div className="card card-side bg-base-100 shadow-xl p-4">
+          <div className="card card-side bg-base-100 shadow-xl px-4">
             <figure>
-              <img src={coin.image} className="h-10" />
+              <img src={coin.image} className="h-20" />
             </figure>
             <div className="card-body">
-              <p className="card-title"> {coin.name} </p>
+              <h1 className="card-title"> {coin.symbol} </h1>
+              <p> Price: {millify(coin.current_price)} </p>
+              <p> Market cap: {millify(coin.market_cap)} </p>
+              <p>
+                24h change:{" "}
+                <span
+                  className={
+                    coin.price_change_percentage_24h > 0
+                      ? "text-lime-500"
+                      : "text-red-600"
+                  }
+                >
+                  {coin.price_change_percentage_24h.toFixed(2)}%
+                </span>
+              </p>
             </div>
           </div>
         </Link>
