@@ -25,7 +25,7 @@ const CoinList = () => {
   }, []);
 
   return (
-    <div className="grid gap-4 grid-cols-3 grid-rows-3 p-8">
+    <div className="grid gap-4 grid-cols-3 grid-rows-3 p-4">
       {coinList.map((coin) => (
         <Link key={coin.id}>
           <div className="card card-side bg-base-100 shadow-xl px-4">
