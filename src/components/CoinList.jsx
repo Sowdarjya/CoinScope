@@ -25,33 +25,39 @@ const CoinList = () => {
   }, []);
 
   return (
-    <div className="grid gap-4 grid-cols-3 grid-rows-3 p-4">
-      {coinList.map((coin) => (
-        <Link key={coin.id}>
-          <div className="card card-side bg-base-100 shadow-xl px-4">
-            <figure>
-              <img src={coin.image} className="h-20" />
-            </figure>
-            <div className="card-body">
-              <h1 className="card-title"> {coin.symbol} </h1>
-              <p> Price: {millify(coin.current_price)} </p>
-              <p> Market cap: {millify(coin.market_cap)} </p>
-              <p>
-                24h change:{" "}
-                <span
-                  className={
-                    coin.price_change_percentage_24h > 0
-                      ? "text-lime-500"
-                      : "text-red-600"
-                  }
-                >
-                  {coin.price_change_percentage_24h.toFixed(2)}%
-                </span>
-              </p>
-            </div>
-          </div>
-        </Link>
-      ))}
+    <div className="flex items-center justify-center">
+      {coinList.length ? (
+        <div className="grid gap-4 grid-cols-3 grid-rows-3 p-4">
+          {coinList.map((coin) => (
+            <Link key={coin.id}>
+              <div className="card card-side bg-base-100 shadow-xl px-4">
+                <figure>
+                  <img src={coin.image} className="h-20" />
+                </figure>
+                <div className="card-body">
+                  <h1 className="card-title"> {coin.symbol} </h1>
+                  <p> Price: {millify(coin.current_price)} </p>
+                  <p> Market cap: {millify(coin.market_cap)} </p>
+                  <p>
+                    24h change:{" "}
+                    <span
+                      className={
+                        coin.price_change_percentage_24h > 0
+                          ? "text-lime-500"
+                          : "text-red-600"
+                      }
+                    >
+                      {coin.price_change_percentage_24h.toFixed(2)}%
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <span className="loading loading-spinner loading-lg bg-[#faed26] h-screen"></span>
+      )}
     </div>
   );
 };
