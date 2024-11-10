@@ -87,7 +87,7 @@ const CoinList = () => {
             ))}
           </div>
         ) : (
-          <span>No data found</span>
+          <span className="loading loading-ring loading-lg bg-[#faed26] h-screen"></span>
         )}
       </div>
     </>
