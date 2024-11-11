@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import millify from "millify";
+import Pagination from "./Pagination";
 
 const CoinList = () => {
   const [coinList, setCoinList] = useState([]);
   const [filteredCoinList, setFilteredCoinList] = useState([]);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [elementsPerPage] = useState(9);
+  const lastElement = currentPage * elementsPerPage;
+  const firstElement = lastElement - elementsPerPage;
+
+  const currentList = filteredCoinList.slice(firstElement, lastElement);
 
   const fetchCoinList = async () => {
     try {
@@ -16,11 +24,12 @@ const CoinList = () => {
       const data = await res.json();
 
       setCoinList(data);
-      console.log("state>>>", coinList);
     } catch (error) {
       console.error(error);
     }
   };
+
+  const paginate = (pageNo) => setCurrentPage(pageNo);
 
   useEffect(() => {
     fetchCoinList();
@@ -53,9 +62,9 @@ const CoinList = () => {
         />
       </div>
       <div className="flex items-center justify-center">
-        {filteredCoinList.length ? (
+        {currentList.length ? (
           <div className="grid gap-4 grid-cols-3 grid-rows-3 p-4">
-            {filteredCoinList.map((coin) => (
+            {currentList.map((coin) => (
               <Link key={coin.id}>
                 <div className="card card-side bg-base-100 shadow-xl px-4">
                   <figure>
@@ -90,6 +99,11 @@ const CoinList = () => {
           <span className="loading loading-ring loading-lg bg-[#faed26] h-screen"></span>
         )}
       </div>
+      <Pagination
+        elementsPerPage={elementsPerPage}
+        totalElements={filteredCoinList.length}
+        paginate={paginate}
+      />
     </>
   );
 };
