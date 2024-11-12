@@ -5,10 +5,9 @@ const NewsList = () => {
 
   const fetchNewsData = async () => {
     try {
-      const res = await fetch(`https://api.coingecko.com/api/v3/news`);
+      const res = await fetch(`https://api.coingecko.com/api/v3/news?id=doge`);
       const data = await res.json();
       setNewsList(data.data);
-      console.log("News>>>>>", newsList);
     } catch (error) {
       console.error(error);
     }
@@ -19,13 +18,11 @@ const NewsList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex items-center justify-center">
       {newsList.length > 0 ? (
-        newsList.map((news) => (
-          <li key={news.id}> {news.title} </li> // Added key prop here
-        ))
+        newsList.map((news) => <li key={news.id}> {news.title} </li>)
       ) : (
-        <p>Loading...</p>
+        <span className="loading loading-ring loading-lg bg-[#faed26] h-screen"></span>
       )}
     </div>
   );
