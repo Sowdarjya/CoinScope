@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
+import Pagination from "./Pagination";
 
 const NewsList = () => {
   const [newsList, setNewsList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [articlesPerPage] = useState(9);
+
+  const lastArticle = currentPage * articlesPerPage;
+  const firstArticle = lastArticle - articlesPerPage;
+  const currentNewsList = newsList.slice(firstArticle, lastArticle);
+
+  const paginate = (pageNo) => setCurrentPage(pageNo);
 
   const fetchNewsData = async () => {
     try {
@@ -20,34 +29,41 @@ const NewsList = () => {
   }, []);
 
   return (
-    <div className=" items-center justify-center">
-      {newsList.length > 0 ? (
-        <div className="grid gap-4 grid-cols-3 grid-rows-3 p-4">
-          {newsList.map((news) => (
-            <div
-              className="card bg-base-100 w-96 shadow-xl"
-              key={news.updated_at}
-            >
-              <figure className="px-10 pt-10">
-                <img src={news.thumb_2x} className="rounded-xl h-[12rem]" />
-              </figure>
-              <div className="card-body items-center text-center">
-                <p>{news.title}</p>
-                <div className="card-actions">
-                  <button className="btn hover:bg-[#faed26] hover:text-[#121111]">
-                    <a href={news.url} target="_blank">
-                      Check out
-                    </a>
-                  </button>
+    <>
+      <div className="flex items-center justify-center">
+        {newsList.length > 0 ? (
+          <div className="grid gap-4 grid-cols-3 grid-rows-3 p-4">
+            {currentNewsList.map((news) => (
+              <div
+                className="card bg-base-100 w-80 shadow-xl"
+                key={news.updated_at}
+              >
+                <figure className="">
+                  <img src={news.thumb_2x} className=" h-[12rem] w-full" />
+                </figure>
+                <div className="card-body items-center text-center">
+                  <p>{news.title}</p>
+                  <div className="card-actions">
+                    <button className="btn hover:bg-[#faed26] hover:text-[#121111]">
+                      <a href={news.url} target="_blank">
+                        Check out
+                      </a>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <span className="loading loading-ring loading-lg bg-[#faed26] h-screen"></span>
-      )}
-    </div>
+            ))}
+          </div>
+        ) : (
+          <span className="loading loading-ring loading-lg bg-[#faed26] h-screen"></span>
+        )}
+      </div>
+      <Pagination
+        elementsPerPage={articlesPerPage}
+        totalElements={newsList.length}
+        paginate={paginate}
+      />
+    </>
   );
 };
 

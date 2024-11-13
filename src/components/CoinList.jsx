@@ -8,8 +8,8 @@ const CoinList = () => {
   const [filteredCoinList, setFilteredCoinList] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
   const [elementsPerPage] = useState(9);
+
   const lastElement = currentPage * elementsPerPage;
   const firstElement = lastElement - elementsPerPage;
 
