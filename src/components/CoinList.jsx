@@ -63,7 +63,7 @@ const CoinList = () => {
       </div>
       <div className="flex items-center justify-center">
         {currentList.length ? (
-          <div className="grid gap-4 grid-cols-3 grid-rows-3 p-4">
+          <div className="grid gap-4 md:grid-cols-3 md:grid-rows-3 sm:grid-cols-2 p-4">
             {currentList.map((coin) => (
               <Link key={coin.id}>
                 <div className="card card-side bg-base-100 shadow-xl px-4">

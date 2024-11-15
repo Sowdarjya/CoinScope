@@ -4,7 +4,7 @@ import Pagination from "./Pagination";
 const NewsList = () => {
   const [newsList, setNewsList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [articlesPerPage] = useState(9);
+  const [articlesPerPage] = useState(6);
 
   const lastArticle = currentPage * articlesPerPage;
   const firstArticle = lastArticle - articlesPerPage;
@@ -32,7 +32,7 @@ const NewsList = () => {
     <>
       <div className="flex items-center justify-center">
         {newsList.length > 0 ? (
-          <div className="grid gap-4 grid-cols-3 grid-rows-3 p-4">
+          <div className="grid gap-4 grid-cols-3 grid-rows-2 p-4">
             {currentNewsList.map((news) => (
               <div
                 className="card bg-base-100 w-80 shadow-xl"
