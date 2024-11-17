@@ -44,6 +44,7 @@ const MarketInfo = () => {
   }
 
   const stats = [
+    { title: "Total Coins", value: millify(marketData?.totalCoins) || 0 },
     { title: "Total Markets", value: millify(marketData?.totalMarkets) || 0 },
     {
       title: "Total Exchanges",
@@ -57,16 +58,15 @@ const MarketInfo = () => {
       title: "Total 24h Volume",
       value: millify(marketData?.total24hVolume) || 0,
     },
-    { title: "Total Coins", value: millify(marketData?.totalCoins) || 0 },
     { title: "Best Coin", value: marketData?.bestCoins[0].symbol || "N/A" },
   ];
 
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-6 mb-6 text-center">
       {stats.map((stat, index) => (
-        <div key={index} className="stats shadow bg-[#faed26] text-[#121111]">
+        <div key={index} className="stats shadow ">
           <div className="stat">
-            <div className="stat-title text-[#121111]">{stat.title}</div>
+            <div className="stat-title ">{stat.title}</div>
             <div className="stat-value text-lg">{stat.value}</div>
           </div>
         </div>
