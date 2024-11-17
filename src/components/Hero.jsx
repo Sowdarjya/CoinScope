@@ -22,7 +22,7 @@ const Hero = () => {
           <Carousel />
         </div>
         <div className="w-[40%]  flex items-center justify-start">
-          <img src={`${heroImg}`} className="h-[20rem]" />
+          <img src={`${heroImg}`} className="h-[17rem]" />
         </div>
       </main>
     </>
