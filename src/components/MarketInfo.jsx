@@ -58,7 +58,7 @@ const MarketInfo = () => {
       title: "Total 24h Volume",
       value: millify(marketData?.total24hVolume) || 0,
     },
-    { title: "Best Coin", value: marketData?.bestCoins[0].symbol || "N/A" },
+    { title: "Best Coin", value: marketData?.bestCoins[0].name || "N/A" },
   ];
 
   return (
