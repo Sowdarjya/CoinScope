@@ -8,6 +8,11 @@ const CoinList = () => {
   const [coinList, setCoinList] = useState([]);
   const [filteredCoinList, setFilteredCoinList] = useState([]);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [coinsPerPage] = useState(9);
+
+  const lastCoin = currentPage * coinsPerPage;
+  const firstCoin = lastCoin - coinsPerPage;
 
   const fetchCoinList = async () => {
     try {
@@ -26,11 +31,19 @@ const CoinList = () => {
   }, []);
 
   useEffect(() => {
-    const filteredData = coinList.filter((coin) =>
-      coin.name.toLowerCase().includes(search.toLowerCase())
+    const searchTerm = search.toLowerCase().trim();
+    if (!searchTerm) {
+      setFilteredCoinList(coinList);
+      return;
+    }
+
+    const filteredData = coinList.filter(
+      (coin) =>
+        coin.name.toLowerCase().includes(searchTerm) ||
+        coin.symbol.toLowerCase().includes(searchTerm)
     );
     setFilteredCoinList(filteredData);
-  }, [search]);
+  }, [search, coinList]);
   return (
     <>
       <div className="flex items-center justify-center mt-4">
