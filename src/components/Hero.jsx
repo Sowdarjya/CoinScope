@@ -6,7 +6,7 @@ import Carousel from "./Carousel";
 const Hero = () => {
   return (
     <>
-      <main className="flex items-center justify-around w-full h-[75vh]">
+      <main className="flex items-center justify-around w-full h-[70vh]">
         <div className="w-[60%] text-center  flex flex-col items-center justify-center">
           <h1 className="text-6xl mb-4 font-semibold text-[#faed26]">
             All Your Coins <br /> One Tracker

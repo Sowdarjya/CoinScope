@@ -21,7 +21,7 @@ const Pagination = ({ elementsPerPage, totalElements, paginate }) => {
             paginate(page);
           }}
           key={page}
-          className={`px-3 py-1 transition-colors duration-300  ${
+          className={`px-3 py-1 transition-colors duration-300 text-sm ${
             activePage === page
               ? "bg-[#faed26] text-[#121111]"
               : "bg-base-100 text-gray-700 hover:bg-[#faed26]"

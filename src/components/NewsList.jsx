@@ -30,12 +30,12 @@ const NewsList = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center">
+      <div className="container mx-auto px-4">
         {newsList.length > 0 ? (
-          <div className="grid gap-4 grid-cols-3 grid-rows-2 p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-6">
             {currentNewsList.map((news) => (
               <div
-                className="card bg-base-100 w-80 shadow-xl"
+                className="card bg-base-100 w-80 shadow-xl mx-auto"
                 key={news.updated_at}
               >
                 <figure className="">
