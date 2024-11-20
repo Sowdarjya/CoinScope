@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Pagination from "./Pagination";
 
 const CoinList = () => {
   const [coinList, setCoinList] = useState([]);
@@ -13,6 +14,11 @@ const CoinList = () => {
 
   const lastCoin = currentPage * coinsPerPage;
   const firstCoin = lastCoin - coinsPerPage;
+  const coins = filteredCoinList.slice(firstCoin, lastCoin);
+
+  const paginate = (page) => {
+    setCurrentPage(page);
+  };
 
   const fetchCoinList = async () => {
     try {
@@ -58,7 +64,7 @@ const CoinList = () => {
       <div className="p-6">
         {coinList.length > 0 ? (
           <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6 place-items-center">
-            {filteredCoinList.map((coin) => (
+            {coins.map((coin) => (
               <Link
                 key={coin.uuid}
                 className="w-[95%] hover:scale-105 transform transition duration-300"
@@ -102,6 +108,11 @@ const CoinList = () => {
           </div>
         )}
       </div>
+      <Pagination
+        elementsPerPage={coinsPerPage}
+        totalElements={filteredCoinList.length}
+        paginate={paginate}
+      />
     </>
   );
 };
