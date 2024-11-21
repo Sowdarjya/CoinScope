@@ -39,7 +39,11 @@ const NewsList = () => {
                 key={news.updated_at}
               >
                 <figure className="">
-                  <img src={news.thumb_2x} className=" h-[12rem] w-full" />
+                  <img
+                    src={news.thumb_2x}
+                    alt={news.title}
+                    className=" h-[12rem] w-full"
+                  />
                 </figure>
                 <div className="card-body items-center text-center">
                   <p>{news.title}</p>

@@ -67,6 +67,7 @@ const CoinList = () => {
             {coins.map((coin) => (
               <Link
                 key={coin.uuid}
+                to={`/cryptocurrencies/${coin.uuid}`}
                 className="w-[95%] hover:scale-105 transform transition duration-300"
               >
                 <div className="card bg-base-100 shadow-md rounded-lg overflow-hidden">

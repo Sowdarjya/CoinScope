@@ -10,8 +10,8 @@ const Header = () => {
     },
     {
       id: 2,
-      name: "Cryptos",
-      slug: "/cryptos",
+      name: "Cryptocurrencies",
+      slug: "/cryptocurrencies",
     },
     {
       id: 3,

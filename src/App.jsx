@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import CryptoCurrencies from "./pages/CryptoCurrencies";
 import News from "./pages/News";
 import Footer from "./components/Footer";
+import CryptoCoinDetails from "./pages/CryptoCoinDetails";
 
 const App = () => {
   return (
@@ -12,7 +13,11 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cryptos" element={<CryptoCurrencies />} />
+        <Route path="/cryptocurrencies" element={<CryptoCurrencies />} />
+        <Route
+          path="/cryptocurrencies/:coinId"
+          element={<CryptoCoinDetails />}
+        />
         <Route path="/news" element={<News />} />
       </Routes>
       <Footer />

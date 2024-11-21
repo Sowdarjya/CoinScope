@@ -13,7 +13,7 @@ const Hero = () => {
           </h1>
           <div>
             <button className="btn btn-outline hover:bg-[#faed26] text-[#faed26] hover:text-[#121111] mx-3">
-              <Link to="/cryptos">Check Dashboard</Link>
+              <Link to="/cryptocurrencies">Check Dashboard</Link>
             </button>
             <button className="btn btn-outline hover:bg-[#faed26] text-[#faed26] hover:text-[#121111] mx-3">
               <Link to="/news">Check News</Link>
