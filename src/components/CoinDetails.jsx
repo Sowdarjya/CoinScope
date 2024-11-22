@@ -1,3 +1,4 @@
+import millify from "millify";
 import React, { useEffect, useState } from "react";
 
 const CoinDetails = ({ coinId }) => {
@@ -25,14 +26,29 @@ const CoinDetails = ({ coinId }) => {
     );
 
   return (
-    <div className="flex items-center justify-between h-screen">
-      <div className="w-[40%]">
-        <img
-          src={coinData.data.coin.iconUrl}
-          alt={coinData.data.coin.name}
-          className="h-[15rem] mx-auto"
-        />
-        <h1 className="text-center">{coinData.data.coin.name}</h1>
+    <div className="card w-96">
+      <figure className="px-10 pt-10">
+        <img src={coinData.data.coin.iconUrl} className="h-[15rem]" />
+      </figure>
+      <div className="card-body items-center text-center">
+        <h2 className="card-title uppercase text-3xl font-extrabold">
+          {" "}
+          {coinData.data.coin.name}{" "}
+        </h2>
+        <p> {coinData.data.coin.description} </p>
+        <p className="text-xl font-bold">
+          {" "}
+          Price: ${millify(coinData.data.coin.price)}{" "}
+        </p>
+        <p className="text-xl font-bold"> Rank: {coinData.data.coin.rank} </p>
+        <p className="text-xl font-bold">
+          {" "}
+          Market cap: ${millify(coinData.data.coin.marketCap)}{" "}
+        </p>
+        <p className="text-xl font-bold">
+          {" "}
+          All-time-high: ${millify(coinData.data.coin.allTimeHigh.price)}{" "}
+        </p>
       </div>
     </div>
   );
