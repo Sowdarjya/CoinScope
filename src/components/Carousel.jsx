@@ -27,9 +27,9 @@ const Carousel = () => {
         <div className="flex">
           {trendingCoins.length > 0 ? (
             trendingCoins.map((coin) => (
-              <Link key={coin.id} className="mx-4">
+              <div key={coin.id} className="mx-4">
                 <img src={coin.image} className="h-10" />
-              </Link>
+              </div>
             ))
           ) : (
             <p className="font-medium text-center text-2xl text-[#121111]">
