@@ -15,10 +15,12 @@ const NewsList = () => {
   const fetchNewsData = async () => {
     try {
       const res = await fetch(
-        `https://api.coingecko.com/api/v3/news?id=crypto`
+        ` https://newsapi.org/v2/everything?q=bitcoin&pageSize
+=30&apiKey=226aeda282c44019834a08c690c93012
+`
       );
       const data = await res.json();
-      setNewsList(data.data);
+      setNewsList(data.articles);
     } catch (error) {
       console.error(error);
     }
@@ -36,11 +38,11 @@ const NewsList = () => {
             {currentNewsList.map((news) => (
               <div
                 className="card bg-base-100 w-80 shadow-xl mx-auto"
-                key={news.updated_at}
+                key={news.publishedAt}
               >
                 <figure className="">
                   <img
-                    src={news.thumb_2x}
+                    src={news.urlToImage}
                     alt={news.title}
                     className=" h-[12rem] w-full"
                   />
