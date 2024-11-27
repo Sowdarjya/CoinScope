@@ -61,7 +61,7 @@ const NewsList = () => {
             ))}
           </div>
         ) : (
-          <span className="loading loading-ring loading-lg bg-[#faed26] h-screen"></span>
+          <span className="loading loading-ring loading-lg bg-[#faed26] h-screen block mx-auto"></span>
         )}
       </div>
       <Pagination
