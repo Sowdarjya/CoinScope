@@ -44,7 +44,6 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Desktop Navigation */}
       <nav className="hidden md:block navbar-end">
         <ul className="flex items-center justify-between px-4">
           {navItems.map((item) => (
@@ -64,7 +63,6 @@ const Header = () => {
         </ul>
       </nav>
 
-      {/* Mobile Navigation Overlay */}
       {isMenuOpen && (
         <div className="fixed inset-0 bg-[#faed26] z-40 md:hidden flex items-center justify-center">
           <nav className="w-full">
