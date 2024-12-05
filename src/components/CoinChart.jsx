@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJs,
@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { CryptoCurrency } from "../context/CryptoCurrencyContext";
 
 ChartJs.register(
   CategoryScale,
@@ -31,7 +32,7 @@ const CoinChart = ({ coinId }) => {
   const fetchCoinPriceHistory = async () => {
     try {
       const res = await fetch(
-        `https://api.coinranking.com/v2/coin/${coinId}/history?timePeriod=${timePeriod}`
+        `https://api.coinranking.com/v2/coin/${coinId}/history?timePeriod=${timePeriod}&referenceCurrencyUuid=${currencyRefId}`
       );
       const { data } = await res.json();
       setCoinPriceHistory(data);
@@ -40,9 +41,18 @@ const CoinChart = ({ coinId }) => {
     }
   };
 
+  const {
+    currency,
+    symbol,
+    currencyRefId,
+    setCurrency,
+    setCurrencyRefId,
+    setSymbol,
+  } = useContext(CryptoCurrency);
+
   useEffect(() => {
     fetchCoinPriceHistory();
-  }, [coinId, timePeriod]);
+  }, [coinId, timePeriod, currency]);
 
   useEffect(() => {
     if (coinPriceHistory && coinPriceHistory.history) {

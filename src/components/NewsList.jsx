@@ -3,14 +3,6 @@ import Pagination from "./Pagination";
 
 const NewsList = () => {
   const [newsList, setNewsList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [articlesPerPage] = useState(6);
-
-  const lastArticle = currentPage * articlesPerPage;
-  const firstArticle = lastArticle - articlesPerPage;
-  const currentNewsList = newsList.slice(firstArticle, lastArticle);
-
-  const paginate = (pageNo) => setCurrentPage(pageNo);
 
   const fetchNewsData = async () => {
     try {
@@ -33,7 +25,7 @@ const NewsList = () => {
       <div className="container mx-auto px-4">
         {newsList.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
-            {currentNewsList.map((news) => (
+            {newsList.map((news) => (
               <div
                 className="card bg-base-100 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105"
                 key={news.publishedAt}
@@ -86,12 +78,6 @@ const NewsList = () => {
           </div>
         )}
       </div>
-
-      <Pagination
-        elementsPerPage={articlesPerPage}
-        totalElements={newsList.length}
-        paginate={paginate}
-      />
     </>
   );
 };

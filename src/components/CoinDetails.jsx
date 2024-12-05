@@ -1,12 +1,15 @@
 import millify from "millify";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { CryptoCurrency } from "../context/CryptoCurrencyContext";
 
 const CoinDetails = ({ coinId }) => {
   const [coinData, setCoinData] = useState(null);
 
   const fetchCoinDetails = async () => {
     try {
-      const res = await fetch(`https://api.coinranking.com/v2/coin/${coinId}`);
+      const res = await fetch(
+        `https://api.coinranking.com/v2/coin/${coinId}?referenceCurrencyUuid=${currencyRefId}`
+      );
       const data = await res.json();
       setCoinData(data);
     } catch (error) {
@@ -14,9 +17,30 @@ const CoinDetails = ({ coinId }) => {
     }
   };
 
+  const {
+    currency,
+    symbol,
+    currencyRefId,
+    setCurrency,
+    setCurrencyRefId,
+    setSymbol,
+  } = useContext(CryptoCurrency);
+
+  const changeToInr = () => {
+    setCurrency("INR");
+    setCurrencyRefId("6mUvpzCc2lFo");
+    setSymbol("₹");
+  };
+
+  const changeToUsd = () => {
+    setCurrency("USD");
+    setCurrencyRefId("yhjMzLPhuIDl");
+    setSymbol("$");
+  };
+
   useEffect(() => {
     fetchCoinDetails();
-  }, [coinId]);
+  }, [coinId, currency]);
 
   if (!coinData)
     return (
@@ -27,6 +51,20 @@ const CoinDetails = ({ coinId }) => {
 
   return (
     <div className="card w-full lg:w-1/3 max-w-md ">
+      <div className="flex gap-4 justify-center md:justify-start">
+        <button
+          onClick={changeToUsd}
+          className="bg-base-100 py-3 px-6 rounded shadow-md hover:scale-105 transition"
+        >
+          USD
+        </button>
+        <button
+          onClick={changeToInr}
+          className="bg-base-100 py-3 px-6 rounded shadow-md hover:scale-105 transition"
+        >
+          INR
+        </button>
+      </div>
       <figure className="px-4 md:px-8 pt-6 md:pt-10">
         <img
           src={coinData.data.coin.iconUrl}
@@ -44,7 +82,10 @@ const CoinDetails = ({ coinId }) => {
         <div className="space-y-3 w-full">
           <p className="text-lg md:text-xl font-bold flex justify-between">
             <span>Price:</span>
-            <span>${millify(coinData.data.coin.price)}</span>
+            <span>
+              {" "}
+              {symbol} {millify(coinData.data.coin.price)}
+            </span>
           </p>
           <p className="text-lg md:text-xl font-bold flex justify-between">
             <span>Rank:</span>
@@ -52,11 +93,17 @@ const CoinDetails = ({ coinId }) => {
           </p>
           <p className="text-lg md:text-xl font-bold flex justify-between">
             <span>Market Cap:</span>
-            <span>${millify(coinData.data.coin.marketCap)}</span>
+            <span>
+              {" "}
+              {symbol} {millify(coinData.data.coin.marketCap)}
+            </span>
           </p>
           <p className="text-lg md:text-xl font-bold flex justify-between">
             <span>All-time-high:</span>
-            <span>${millify(coinData.data.coin.allTimeHigh.price)}</span>
+            <span>
+              {" "}
+              {symbol} {millify(coinData.data.coin.allTimeHigh.price)}
+            </span>
           </p>
         </div>
       </div>

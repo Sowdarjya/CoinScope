@@ -1,35 +1,55 @@
 import React, { useState } from "react";
 
 const Pagination = ({ elementsPerPage, totalElements, paginate }) => {
-  const pages = [];
   const [activePage, setActivePage] = useState(1);
+  const totalPages = Math.ceil(totalElements / elementsPerPage);
 
-  for (let i = 1; i <= Math.ceil(totalElements / elementsPerPage); i++) {
-    pages.push(i);
-  }
+  const handlePageClick = (page) => {
+    setActivePage(page);
+    paginate(page);
+  };
 
-  const handlePageClick = (number) => {
-    setActivePage(number);
+  const getPageNumbers = () => {
+    const pages = [];
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (activePage > 3) pages.push("...");
+      const start = Math.max(2, activePage - 1);
+      const end = Math.min(totalPages - 1, activePage + 1);
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      if (activePage < totalPages - 2) pages.push("...");
+      pages.push(totalPages);
+    }
+    return pages;
   };
 
   return (
     <div className="flex items-center justify-center mb-4">
-      {pages.map((page) => (
-        <button
-          onClick={() => {
-            handlePageClick(page);
-            paginate(page);
-          }}
-          key={page}
-          className={`px-3 py-1 transition-colors duration-300 text-sm ${
-            activePage === page
-              ? "bg-[#faed26] text-[#121111]"
-              : "bg-base-100 text-gray-700 hover:bg-[#faed26]"
-          }`}
-        >
-          {page}
-        </button>
-      ))}
+      {getPageNumbers().map((page, index) =>
+        typeof page === "number" ? (
+          <button
+            key={index}
+            onClick={() => handlePageClick(page)}
+            className={`px-4 py-1 mx-1 ${
+              activePage === page
+                ? "bg-[#faed26] text-[#121111]"
+                : "bg-base-100"
+            }`}
+          >
+            {page}
+          </button>
+        ) : (
+          <span key={index} className="mx-2">
+            {page}
+          </span>
+        )
+      )}
     </div>
   );
 };

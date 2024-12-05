@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <header className="navbar bg-[#faed26] relative">
-      <div className="navbar-start text-3xl text-[#121111] font-bold w-full flex items-center justify-between px-4 py-3">
+      <div className="navbar-start text-3xl text-[#121111] font-bold w-full flex items-center justify-between px-4">
         <Link to="/" className="z-50">
           CoinScope
         </Link>

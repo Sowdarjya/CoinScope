@@ -1,9 +1,10 @@
 import millify from "millify";
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
+import { CryptoCurrency } from "../context/CryptoCurrencyContext";
 
 const CoinList = () => {
   const [coinList, setCoinList] = useState([]);
@@ -20,10 +21,31 @@ const CoinList = () => {
     setCurrentPage(page);
   };
 
+  const {
+    currency,
+    symbol,
+    currencyRefId,
+    setCurrency,
+    setCurrencyRefId,
+    setSymbol,
+  } = useContext(CryptoCurrency);
+
+  const changeToInr = () => {
+    setCurrency("INR");
+    setCurrencyRefId("6mUvpzCc2lFo");
+    setSymbol("₹");
+  };
+
+  const changeToUsd = () => {
+    setCurrency("USD");
+    setCurrencyRefId("yhjMzLPhuIDl");
+    setSymbol("$");
+  };
+
   const fetchCoinList = async () => {
     try {
       const res = await fetch(
-        `https://api.coinranking.com/v2/coins?referenceCurrencyUuid=6mUvpzCc2lFo&limit=99`
+        `https://api.coinranking.com/v2/coins?referenceCurrencyUuid=${currencyRefId}&limit=99`
       );
       const data = await res.json();
       setCoinList(data.data.coins);
@@ -34,7 +56,7 @@ const CoinList = () => {
 
   useEffect(() => {
     fetchCoinList();
-  }, []);
+  }, [currency]);
 
   useEffect(() => {
     const searchTerm = search.toLowerCase().trim();
@@ -52,15 +74,30 @@ const CoinList = () => {
   }, [search, coinList]);
   return (
     <>
-      <div className="flex items-center justify-center mt-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between mt-4 gap-4 px-6">
         <input
           type="text"
           placeholder="Search cryptocurrency"
           value={search}
-          className="w-1/2 p-3 outline-none bg-base-100 rounded-md"
+          className="w-full sm:w-1/2 p-3 outline-none bg-base-100 rounded-md"
           onChange={(e) => setSearch(e.target.value)}
         />
+        <div className="flex gap-4">
+          <button
+            onClick={changeToUsd}
+            className="bg-base-100 py-3 px-6 rounded shadow-md hover:scale-105 transition"
+          >
+            USD
+          </button>
+          <button
+            onClick={changeToInr}
+            className="bg-base-100 py-3 px-6 rounded shadow-md hover:scale-105 transition"
+          >
+            INR
+          </button>
+        </div>
       </div>
+
       <div className="p-6">
         {coinList.length > 0 ? (
           <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6 place-items-center">
@@ -81,9 +118,11 @@ const CoinList = () => {
                       <p className="text-lg font-bold">
                         {coin.rank}. {coin.symbol}
                       </p>
-                      <p className="text-lg ">Price: ${millify(coin.price)}</p>
                       <p className="text-lg ">
-                        Market cap: ${millify(coin.marketCap)}
+                        Price: {symbol} {millify(coin.price)}
+                      </p>
+                      <p className="text-lg ">
+                        Market cap: {symbol} {millify(coin.marketCap)}
                       </p>
                       <p className="text-lg">
                         24h change:{" "}

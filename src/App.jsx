@@ -9,8 +9,9 @@ import CryptoCoinDetails from "./pages/CryptoCoinDetails";
 
 const App = () => {
   return (
-    <>
+    <div>
       <Header />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cryptocurrencies" element={<CryptoCurrencies />} />
@@ -20,8 +21,9 @@ const App = () => {
         />
         <Route path="/news" element={<News />} />
       </Routes>
+
       <Footer />
-    </>
+    </div>
   );
 };
 
