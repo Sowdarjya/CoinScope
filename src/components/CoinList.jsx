@@ -21,26 +21,8 @@ const CoinList = () => {
     setCurrentPage(page);
   };
 
-  const {
-    currency,
-    symbol,
-    currencyRefId,
-    setCurrency,
-    setCurrencyRefId,
-    setSymbol,
-  } = useContext(CryptoCurrency);
-
-  const changeToInr = () => {
-    setCurrency("INR");
-    setCurrencyRefId("6mUvpzCc2lFo");
-    setSymbol("₹");
-  };
-
-  const changeToUsd = () => {
-    setCurrency("USD");
-    setCurrencyRefId("yhjMzLPhuIDl");
-    setSymbol("$");
-  };
+  const { currency, symbol, currencyRefId, changeToInr, changeToUsd } =
+    useContext(CryptoCurrency);
 
   const fetchCoinList = async () => {
     try {
@@ -85,20 +67,24 @@ const CoinList = () => {
         <div className="flex gap-4">
           <button
             onClick={changeToUsd}
-            className="bg-base-100 py-3 px-6 rounded shadow-md hover:scale-105 transition"
+            className={`py-3 px-6 rounded shadow-md hover:scale-105 transition ${
+              currency === "USD" ? "bg-[#faed26] text-[#121111]" : "bg-base-100"
+            }`}
           >
             USD
           </button>
           <button
             onClick={changeToInr}
-            className="bg-base-100 py-3 px-6 rounded shadow-md hover:scale-105 transition"
+            className={`py-3 px-6 rounded shadow-md hover:scale-105 transition ${
+              currency === "INR" ? "bg-[#faed26] text-[#121111]" : "bg-base-100"
+            }`}
           >
             INR
           </button>
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-6 min-h-[100vh]">
         {coinList.length > 0 ? (
           <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6 place-items-center">
             {coins.map((coin) => (

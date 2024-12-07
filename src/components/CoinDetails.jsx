@@ -17,26 +17,8 @@ const CoinDetails = ({ coinId }) => {
     }
   };
 
-  const {
-    currency,
-    symbol,
-    currencyRefId,
-    setCurrency,
-    setCurrencyRefId,
-    setSymbol,
-  } = useContext(CryptoCurrency);
-
-  const changeToInr = () => {
-    setCurrency("INR");
-    setCurrencyRefId("6mUvpzCc2lFo");
-    setSymbol("₹");
-  };
-
-  const changeToUsd = () => {
-    setCurrency("USD");
-    setCurrencyRefId("yhjMzLPhuIDl");
-    setSymbol("$");
-  };
+  const { currency, symbol, currencyRefId, changeToInr, changeToUsd } =
+    useContext(CryptoCurrency);
 
   useEffect(() => {
     fetchCoinDetails();
@@ -54,13 +36,17 @@ const CoinDetails = ({ coinId }) => {
       <div className="flex gap-4 justify-center md:justify-start">
         <button
           onClick={changeToUsd}
-          className="bg-base-100 py-3 px-6 rounded shadow-md hover:scale-105 transition"
+          className={`py-3 px-6 rounded shadow-md hover:scale-105 transition ${
+            currency === "USD" ? "bg-[#faed26] text-[#121111]" : "bg-base-100"
+          }`}
         >
           USD
         </button>
         <button
           onClick={changeToInr}
-          className="bg-base-100 py-3 px-6 rounded shadow-md hover:scale-105 transition"
+          className={`py-3 px-6 rounded shadow-md hover:scale-105 transition ${
+            currency === "INR" ? "bg-[#faed26] text-[#121111]" : "bg-base-100"
+          }`}
         >
           INR
         </button>
@@ -96,13 +82,6 @@ const CoinDetails = ({ coinId }) => {
             <span>
               {" "}
               {symbol} {millify(coinData.data.coin.marketCap)}
-            </span>
-          </p>
-          <p className="text-lg md:text-xl font-bold flex justify-between">
-            <span>All-time-high:</span>
-            <span>
-              {" "}
-              {symbol} {millify(coinData.data.coin.allTimeHigh.price)}
             </span>
           </p>
         </div>

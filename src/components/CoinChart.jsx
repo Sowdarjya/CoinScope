@@ -41,14 +41,7 @@ const CoinChart = ({ coinId }) => {
     }
   };
 
-  const {
-    currency,
-    symbol,
-    currencyRefId,
-    setCurrency,
-    setCurrencyRefId,
-    setSymbol,
-  } = useContext(CryptoCurrency);
+  const { currency, currencyRefId } = useContext(CryptoCurrency);
 
   useEffect(() => {
     fetchCoinPriceHistory();
