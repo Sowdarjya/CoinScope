@@ -31,28 +31,36 @@ const Header = () => {
           CoinScope
         </Link>
 
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden z-50"
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {isMenuOpen ? (
-            <IoClose className="text-2xl text-[#121111]" />
-          ) : (
-            <GiHamburgerMenu className="text-2xl text-[#121111]" />
-          )}
-        </button>
+        <div className="flex items-center md:hidden">
+          <Link
+            to="/login"
+            className="mr-4 text-[#faed26] text-sm bg-[#121111] p-2 rounded-lg"
+          >
+            Login
+          </Link>
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="z-50"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? (
+              <IoClose className="text-2xl text-[#121111]" />
+            ) : (
+              <GiHamburgerMenu className="text-2xl text-[#121111]" />
+            )}
+          </button>
+        </div>
       </div>
 
-      <nav className="hidden md:block navbar-end">
-        <ul className="flex items-center justify-between px-4">
+      <nav className="hidden md:flex navbar-end items-center w-full px-4">
+        <ul className="flex-grow flex items-center justify-center space-x-6">
           {navItems.map((item) => (
             <li key={item.id}>
               <NavLink
                 className={(e) => {
                   return e.isActive
-                    ? "text-[#faed26] mx-3 bg-[#121111] p-2 rounded-xl text-lg font-medium"
-                    : "text-[#121111] mx-3 text-lg hover:text-[#525252] font-medium";
+                    ? "text-[#faed26] bg-[#121111] p-2 rounded-xl text-lg font-medium"
+                    : "text-[#121111] text-lg hover:text-[#525252] font-medium";
                 }}
                 to={`${item.slug}`}
               >
@@ -61,6 +69,13 @@ const Header = () => {
             </li>
           ))}
         </ul>
+
+        <Link
+          to="/login"
+          className=" text-[#faed26] bg-[#121111] font-medium px-4 py-2 rounded-xl"
+        >
+          Login
+        </Link>
       </nav>
 
       {isMenuOpen && (

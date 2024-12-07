@@ -1,15 +1,13 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC1Fv3F9Ux6yWxBLVkS9KKN09utSxMcMeA",
-  authDomain: "coinscope-995eb.firebaseapp.com",
-  projectId: "coinscope-995eb",
-  storageBucket: "coinscope-995eb.firebasestorage.app",
-  messagingSenderId: "837036564717",
-  appId: "1:837036564717:web:251803793f1257fb402ce4",
-  measurementId: "G-YKQQW7Q28R",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
