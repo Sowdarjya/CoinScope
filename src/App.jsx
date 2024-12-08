@@ -7,6 +7,7 @@ import News from "./pages/News";
 import Footer from "./components/Footer";
 import CryptoCoinDetails from "./pages/CryptoCoinDetails";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         />
         <Route path="/news" element={<News />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
 
       <Footer />

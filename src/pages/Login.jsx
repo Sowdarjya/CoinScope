@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { auth, db } from "../config/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
+import { CryptoCurrency } from "../context/CryptoCurrencyContext";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -16,6 +17,8 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [haveAnAccount, setHaveAnAccount] = useState(true);
+
+  const { setUser } = useContext(CryptoCurrency);
 
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
@@ -29,6 +32,7 @@ const Login = () => {
           createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
               const user = userCredential.user;
+              user.displayName = name;
               toast.success("Account Created", {
                 style: {
                   padding: "16px",
@@ -41,6 +45,7 @@ const Login = () => {
                   secondary: "#121111",
                 },
               });
+              setUser(user);
               addUser(user);
               setTimeout(() => {
                 navigate("/");
@@ -125,6 +130,7 @@ const Login = () => {
               secondary: "#121111",
             },
           });
+          setUser(user);
           addUser(user);
           setTimeout(() => {
             navigate("/");
@@ -182,6 +188,7 @@ const Login = () => {
               secondary: "#121111",
             },
           });
+          setUser(user);
           setTimeout(() => {
             navigate("/");
           }, 2000);
@@ -283,21 +290,21 @@ const Login = () => {
                 onClick={logIn}
                 className="card bg-base-100 rounded-box grid p-2 w-3/4 mx-auto place-items-center text-gray-200"
               >
-                LogIn
+                Log In
               </button>
               <div className="divider-neutral divider text-[#121111]">OR</div>
               <button
                 onClick={signInWithGoogle}
                 className="card bg-base-100 rounded-box grid p-2 w-3/4 mx-auto place-items-center text-gray-200"
               >
-                LogIn with Google
+                Log In with Google
               </button>
             </div>
             <p
               className="text-[#121111] cursor-pointer my-2"
               onClick={() => setHaveAnAccount(!haveAnAccount)}
             >
-              Don't have an account ? <span>SignUp</span>
+              Don't have an account ? <span>Sign Up</span>
             </p>
           </>
         ) : (
@@ -356,21 +363,21 @@ const Login = () => {
                 onClick={signUpWithEmailAndPassword}
                 className="card bg-base-100 rounded-box grid p-2 w-3/4 mx-auto place-items-center text-gray-200"
               >
-                SignUp
+                Sign Up
               </button>
               <div className="divider-neutral divider text-[#121111]">OR</div>
               <button
                 onClick={signInWithGoogle}
                 className="card bg-base-100 rounded-box grid p-2 w-3/4 mx-auto place-items-center text-gray-200"
               >
-                SignUp with Google
+                Sign Up with Google
               </button>
             </div>
             <p
               className="text-[#121111] cursor-pointer my-2"
               onClick={() => setHaveAnAccount(!haveAnAccount)}
             >
-              Already have an account ? <span>Login</span>
+              Already have an account ? <span>Log In</span>
             </p>
           </>
         )}

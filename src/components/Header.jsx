@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
+import { CryptoCurrency } from "../context/CryptoCurrencyContext";
+import heroImg from "../assets/increase.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { user } = useContext(CryptoCurrency);
 
   const navItems = [
     {
@@ -32,12 +36,20 @@ const Header = () => {
         </Link>
 
         <div className="flex items-center md:hidden">
-          <Link
-            to="/login"
-            className="mr-4 text-[#faed26] text-sm bg-[#121111] p-2 rounded-lg"
-          >
-            Login
-          </Link>
+          {user ? (
+            <Link to="/profile" className="avatar">
+              <div className="ring-black ring-offset-base-100 w-8 rounded-full ring ring-offset-2 mr-3">
+                <img src={user.photoURL ? user.photoURL : heroImg} />
+              </div>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className=" text-[#faed26] bg-[#121111] font-medium px-4 py-2 rounded-xl"
+            >
+              Log In
+            </Link>
+          )}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="z-50"
@@ -69,13 +81,20 @@ const Header = () => {
             </li>
           ))}
         </ul>
-
-        <Link
-          to="/login"
-          className=" text-[#faed26] bg-[#121111] font-medium px-4 py-2 rounded-xl"
-        >
-          Login
-        </Link>
+        {user ? (
+          <Link to="/profile" className="avatar">
+            <div className="ring-black ring-offset-base-100 w-9 rounded-full ring ring-offset-2">
+              <img src={user.photoURL ? user.photoURL : heroImg} />
+            </div>
+          </Link>
+        ) : (
+          <Link
+            to="/login"
+            className=" text-[#faed26] bg-[#121111] font-medium px-4 py-2 rounded-xl"
+          >
+            Log In
+          </Link>
+        )}
       </nav>
 
       {isMenuOpen && (
