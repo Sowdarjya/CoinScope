@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Pagination from "./Pagination";
 
 const NewsList = () => {
   const [newsList, setNewsList] = useState([]);
@@ -7,7 +6,9 @@ const NewsList = () => {
   const fetchNewsData = async () => {
     try {
       const res = await fetch(
-        `https://newsapi.org/v2/top-headlines?q=crypto&pageSize=30&apiKey=226aeda282c44019834a08c690c93012`
+        `https://newsapi.org/v2/top-headlines?q=crypto&pageSize=30&apiKey=${
+          import.meta.env.VITE_NEWS_API_KEY
+        }`
       );
       const data = await res.json();
       setNewsList(data.articles);
@@ -50,7 +51,7 @@ const NewsList = () => {
                   </h3>
 
                   {news.author && (
-                    <p className="text-sm text-gray-600 mb-2 italic">
+                    <p className="text-sm text-gray-300 mb-2 italic">
                       ~{" "}
                       {news.author.length > 30
                         ? news.author.slice(0, 30) + "..."

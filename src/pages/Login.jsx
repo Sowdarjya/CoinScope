@@ -7,8 +7,9 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { CryptoCurrency } from "../context/CryptoCurrencyContext";
+import { getDoc } from "firebase/firestore";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -22,7 +23,6 @@ const Login = () => {
 
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
-  const usersCollectionRef = collection(db, "users");
 
   const signUpWithEmailAndPassword = async (e) => {
     e.preventDefault();
@@ -226,12 +226,17 @@ const Login = () => {
   };
 
   const addUser = async (user) => {
+    const userDocRef = doc(db, "users", user.uid);
+    const userDoc = await getDoc(userDocRef);
+
     try {
-      await addDoc(usersCollectionRef, {
-        name: user.displayName ? user.displayName : name,
-        email: user.email ? user.email : email,
-        createdAt: new Date(),
-      });
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, "users", user.uid), {
+          name: user.displayName ? user.displayName : name,
+          email: user.email ? user.email : email,
+          createdAt: new Date(),
+        });
+      }
     } catch (error) {
       toast.error(error.message, {
         style: {
@@ -245,6 +250,7 @@ const Login = () => {
           secondary: "#121111",
         },
       });
+      console.error(error.message);
     }
   };
 

@@ -17,7 +17,7 @@ const CoinDetails = ({ coinId }) => {
     }
   };
 
-  const { currency, symbol, currencyRefId, changeToInr, changeToUsd } =
+  const { currency, symbol, currencyRefId, changeToInr, changeToUsd, user } =
     useContext(CryptoCurrency);
 
   useEffect(() => {

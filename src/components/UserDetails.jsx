@@ -74,7 +74,7 @@ const UserDetails = () => {
         {user?.metadata?.creationTime ? user.metadata.creationTime : "N/A"}
       </p>
       <p className="text-center mb-4 text-xs">
-        Last acttivity:{" "}
+        Last activity:{" "}
         {user?.metadata?.lastSignInTime ? user.metadata.lastSignInTime : "N/A"}
       </p>
       <div className="flex justify-center">
