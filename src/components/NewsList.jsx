@@ -7,9 +7,9 @@ const NewsList = () => {
   const fetchNewsData = async () => {
     try {
       const res = await fetch(
-        `https://gnews.io/api/v4/top-headlines?topic=crypto&token=${
-          import.meta.env.VITE_GNEWS_API_KEY
-        }&lang=en`
+        `https://gnews.io/api/v4/search?q=crypto&lang=en&country=us&max=10&apikey=${
+          import.meta.env.VITE_NEWS_API_KEY
+        }`
       );
 
       if (!res.ok) {
