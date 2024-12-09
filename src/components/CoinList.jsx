@@ -69,7 +69,18 @@ const CoinList = () => {
     const coinDoc = await getDoc(coinDocRef);
 
     if (!user) {
-      toast.error("You need to be logged in to add favorites");
+      toast.error("You need to be logged in to add favorites", {
+        style: {
+          padding: "16px",
+          color: "#faed26",
+          background: "#121111",
+          border: "3px solid #faed26",
+        },
+        iconTheme: {
+          primary: "#faed26",
+          secondary: "#121111",
+        },
+      });
       return;
     }
 
@@ -79,19 +90,51 @@ const CoinList = () => {
           ...coin,
           symbol: symbol,
         });
-        toast.success(`${coin.name} added to favorites!`);
+        toast.success(`${coin.name} added to watchlist!`, {
+          style: {
+            padding: "16px",
+            color: "#faed26",
+            background: "#121111",
+            border: "3px solid #faed26",
+          },
+          iconTheme: {
+            primary: "#faed26",
+            secondary: "#121111",
+          },
+        });
       } else {
-        toast.error(`${coin.name} already added to watchlist`);
+        toast.error(`${coin.name} already added to watchlist`, {
+          style: {
+            padding: "16px",
+            color: "#faed26",
+            background: "#121111",
+            border: "3px solid #faed26",
+          },
+          iconTheme: {
+            primary: "#faed26",
+            secondary: "#121111",
+          },
+        });
       }
     } catch (error) {
-      console.error("Error adding to favorites:", error);
-      toast.error("Error adding to favorites");
+      toast.error("Error adding to favorites", {
+        style: {
+          padding: "16px",
+          color: "#faed26",
+          background: "#121111",
+          border: "3px solid #faed26",
+        },
+        iconTheme: {
+          primary: "#faed26",
+          secondary: "#121111",
+        },
+      });
     }
   };
 
   return (
     <>
-      <Toaster />
+      <Toaster position="top-right" />
       <div className="flex flex-col sm:flex-row items-center justify-between mt-4 gap-4 px-6">
         <input
           type="text"

@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import { CryptoCurrency } from "../context/CryptoCurrencyContext";
-import heroImg from "../assets/increase.png";
+import noUserImg from "../assets/noUserImg.webp";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,7 +39,7 @@ const Header = () => {
           {user ? (
             <Link to="/profile" className="avatar">
               <div className="ring-black ring-offset-base-100 w-8 rounded-full ring ring-offset-2 mr-3">
-                <img src={user.photoURL ? user.photoURL : heroImg} />
+                <img src={user.photoURL ? user.photoURL : noUserImg} />
               </div>
             </Link>
           ) : (
@@ -84,7 +84,7 @@ const Header = () => {
         {user ? (
           <Link to="/profile" className="avatar">
             <div className="ring-black ring-offset-base-100 w-9 rounded-full ring ring-offset-2">
-              <img src={user.photoURL ? user.photoURL : heroImg} />
+              <img src={user.photoURL ? user.photoURL : noUserImg} />
             </div>
           </Link>
         ) : (
