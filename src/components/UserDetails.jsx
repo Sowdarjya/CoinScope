@@ -1,22 +1,21 @@
 import React, { useContext, useState } from "react";
-import { CryptoCurrency } from "../context/CryptoCurrencyContext";
 import { auth } from "../config/firebaseConfig";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import noUserImg from "../assets/noUserImg.webp";
+import { CryptoCurrency } from "../context/CryptoCurrencyContext";
 
 const UserDetails = () => {
-  const { user, setUser } = useContext(CryptoCurrency);
   const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
-
-  console.log(user);
+  const user = auth.currentUser;
+  const { setUser } = useContext(CryptoCurrency);
 
   const logOut = async () => {
     signOut(auth)
       .then(() => {
-        setUser(null);
+        setUser(false);
         toast.success("Logged Out", {
           style: {
             padding: "16px",
@@ -54,36 +53,53 @@ const UserDetails = () => {
   };
 
   return (
-    <div className="w-1/3 min-h-[50%] p-8">
+    <div className="w-full max-w-md mx-auto px-4 py-8 sm:px-6 lg:px-8">
       <Toaster position="top-right" />
-      <div className="flex justify-center mb-4">
-        <img
-          src={imageError ? noUserImg : user?.photoURL || noUserImg}
-          alt={user?.displayName || "User Profile"}
-          className="w-64 h-64 object-cover rounded-full border-4 shadow-lg"
-          onError={handleImageError}
-          loading="lazy"
-        />
-      </div>
-      <h1 className="text-center text-4xl font-bold mb-4">
-        {user?.displayName || "User"}
-      </h1>
-      <p className="text-center mb-4">{user?.email}</p>
-      <p className="text-center mb-4 text-xs">
-        Created at:{" "}
-        {user?.metadata?.creationTime ? user.metadata.creationTime : "N/A"}
-      </p>
-      <p className="text-center mb-4 text-xs">
-        Last activity:{" "}
-        {user?.metadata?.lastSignInTime ? user.metadata.lastSignInTime : "N/A"}
-      </p>
-      <div className="flex justify-center">
-        <button
-          className="px-6 py-2 text-[#faed26] border-2 border-[#faed26] rounded-3xl hover:bg-[#faed26] transition-colors duration-200 hover:text-[#121111]"
-          onClick={logOut}
-        >
-          Log Out
-        </button>
+
+      <div className="flex flex-col items-center space-y-4">
+        <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64">
+          <img
+            src={imageError ? noUserImg : user?.photoURL || noUserImg}
+            alt={user?.displayName || "User Profile"}
+            className="w-full h-full object-cover rounded-full border-4 border-gray-200 shadow-lg"
+            onError={handleImageError}
+            loading="lazy"
+          />
+        </div>
+
+        <div className="text-center space-y-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+            {user?.displayName || "User"}
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600">{user?.email}</p>
+
+          <div className="text-xs text-gray-500 space-y-1">
+            <p>
+              Created at:{" "}
+              {user?.metadata?.creationTime
+                ? user.metadata.creationTime
+                : "N/A"}
+            </p>
+            <p>
+              Last activity:{" "}
+              {user?.metadata?.lastSignInTime
+                ? user.metadata.lastSignInTime
+                : "N/A"}
+            </p>
+          </div>
+
+          <div className="pt-4">
+            <button
+              className="px-6 py-2 text-[#faed26] border-2 border-[#faed26] rounded-3xl 
+                         hover:bg-[#faed26] hover:text-[#121111] 
+                         transition-colors duration-200 
+                         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#faed26]"
+              onClick={logOut}
+            >
+              Log Out
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

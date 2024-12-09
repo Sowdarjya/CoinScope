@@ -1,103 +1,147 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { auth, db } from "../config/firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
-import { useState } from "react";
-import millify from "millify";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { CryptoCurrency } from "../context/CryptoCurrencyContext";
-import { Toaster } from "react-hot-toast";
 
 const WatchList = () => {
   const [watchList, setWatchList] = useState([]);
+
   const user = auth.currentUser;
-  const { currency } = useContext(CryptoCurrency);
 
   const getWatchList = async () => {
     if (!user) {
       return;
     }
+
     try {
-      const watchlistCollectionRef = collection(
-        db,
-        "users",
-        user.uid,
-        "favourites"
-      );
-      const querySnapshot = await getDocs(watchlistCollectionRef);
-      const watchListData = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const watchListDocsRef = collection(db, "users", user.uid, "favourites");
+      const watchListDocs = await getDocs(watchListDocsRef);
+      const watchListData = watchListDocs.docs.map((doc) => doc.data());
       setWatchList(watchListData);
     } catch (error) {
-      console.error(error.message);
+      toast.error(error.message, {
+        style: {
+          padding: "16px",
+          color: "#faed26",
+          background: "#121111",
+          border: "3px solid #faed26",
+        },
+        iconTheme: {
+          primary: "#faed26",
+          secondary: "#121111",
+        },
+      });
+    }
+  };
+
+  const removeFromWatchList = async (coinId) => {
+    try {
+      const coinDocRef = doc(db, "users", user.uid, "favourites", coinId);
+
+      await deleteDoc(coinDocRef);
+
+      setWatchList((prev) => prev.filter((coin) => coin.coinId !== coinId));
+      toast.success("removed from watchlist", {
+        style: {
+          padding: "16px",
+          color: "#faed26",
+          background: "#121111",
+          border: "3px solid #faed26",
+        },
+        iconTheme: {
+          primary: "#faed26",
+          secondary: "#121111",
+        },
+      });
+    } catch (error) {
+      toast.error(error.message, {
+        style: {
+          padding: "16px",
+          color: "#faed26",
+          background: "#121111",
+          border: "3px solid #faed26",
+        },
+        iconTheme: {
+          primary: "#faed26",
+          secondary: "#121111",
+        },
+      });
     }
   };
 
   useEffect(() => {
     getWatchList();
-  }, []);
+  }, [watchList]);
 
   if (!user) {
-    return <h1>Login to see your watchlist</h1>;
+    return (
+      <div className="min-h-screen flex items-center justify-center w-2/3">
+        <h1 className="text-3xl text-[#faed26]">
+          Log in first to see your watch list
+        </h1>
+      </div>
+    );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="w-full max-w-6xl p-4 sm:px-6 lg:px-8 mx-auto">
       <Toaster position="top-right" />
-      <h2 className="text-3xl font-bold mb-6 text-center">My Watchlist</h2>
+      <h1 className="text-center text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6">
+        My Watchlist
+      </h1>
 
-      {watchList.length === 0 ? (
-        <div className="text-center text-xl">
-          Your watchlist is empty. Add some cryptocurrencies!
-        </div>
-      ) : (
-        <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 place-items-center">
+      {watchList.length > 0 ? (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {watchList.map((coin) => (
-            <div key={coin.uuid} className="w-[90%]">
-              <div className="card bg-base-100 shadow-md rounded-lg overflow-hidden">
-                <div className="flex items-center p-4 mx-auto md:mx-0 flex-col lg:flex-row">
-                  <img
-                    src={coin.iconUrl}
-                    alt={coin.name}
-                    className="h-14 w-12 mr-6"
-                  />
-                  <div>
-                    <p className="text-xl font-bold">{coin.name}</p>
-                    <p className="text-xl">
-                      Price: {coin.symbol} {millify(coin.price)}
-                    </p>
-                    <p className="text-xl">
-                      Market cap: {coin.symbol} {millify(coin.marketCap)}
-                    </p>
-                    <p className="text-xl">
-                      24h change:{" "}
-                      <span
-                        className={
-                          coin.change >= 0 ? " text-lime-500" : " text-red-500"
-                        }
-                      >
-                        {millify(coin.change)}%
-                      </span>{" "}
-                    </p>
-                    <div className="flex items-center justify-start mt-2 gap-4">
-                      <Link to={`/cryptocurrencies/${coin.uuid}`}>
-                        <button className="hover:bg-[#faed26] py-1 px-2 rounded-lg hover:text-[#121111] border-2 border-[#faed26] text-[#faed26] transition-colors">
-                          Details
-                        </button>
-                      </Link>
-                      <button
-                        // onClick={() => removeFromWatchlist(coin.uuid)}
-                        className="p-2 rounded-full border-2 text-red-500 border-red-500 hover:bg-red-600 hover:text-gray-400 hover:border-gray-400"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div
+              key={coin.coinId}
+              className="bg-base-100 rounded-lg shadow-md hover:shadow-lg 
+                         transform hover:scale-105 transition-all duration-300 
+                         flex items-center justify-between p-4 space-x-4"
+            >
+              <Link
+                to={`/cryptocurrencies/${coin.coinId}`}
+                className="flex items-center space-x-4 flex-grow"
+              >
+                <img
+                  src={coin.img}
+                  alt={coin.name}
+                  className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
+                />
+                <p
+                  className="text-lg sm:text-xl font-medium truncate 
+                              hover:text-[#faed26] transition-colors duration-200"
+                >
+                  {coin.name}
+                </p>
+              </Link>
+
+              <button
+                className="text-red-500 hover:text-red-700 transition-colors duration-200"
+                onClick={() => removeFromWatchList(coin.coinId)}
+                aria-label={`Remove ${coin.name} from watchlist`}
+              >
+                <RiDeleteBin6Line className="text-xl sm:text-2xl" />
+              </button>
             </div>
           ))}
+        </div>
+      ) : (
+        <div className="text-center py-12">
+          <p className="text-xl sm:text-2xl text-gray-600">
+            No coins added to watchlist. Add some!
+          </p>
+          <p className="text-sm sm:text-base text-gray-500 mt-2">
+            Explore cryptocurrencies and start tracking your favorites.
+          </p>
         </div>
       )}
     </div>

@@ -7,7 +7,7 @@ const CryptoCurrencyContext = ({ children }) => {
   const [currency, setCurrency] = useState("USD");
   const [symbol, setSymbol] = useState("$");
   const [currencyRefId, setCurrencyRefId] = useState("yhjMzLPhuIDl");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(false);
 
   const changeToInr = () => {
     setCurrency("INR");

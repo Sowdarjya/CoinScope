@@ -87,8 +87,9 @@ const CoinList = () => {
     try {
       if (!coinDoc.exists()) {
         await setDoc(doc(db, "users", user.uid, "favourites", coin.uuid), {
-          ...coin,
-          symbol: symbol,
+          name: coin.name,
+          img: coin.iconUrl,
+          coinId: coin.uuid,
         });
         toast.success(`${coin.name} added to watchlist!`, {
           style: {

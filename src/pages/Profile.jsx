@@ -4,7 +4,7 @@ import WatchList from "../components/WatchList";
 
 const Profile = () => {
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row min-h-screen">
       <UserDetails />
       <WatchList />
     </div>
