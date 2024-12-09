@@ -8,12 +8,24 @@ const NewsList = () => {
       const res = await fetch(
         `https://newsapi.org/v2/top-headlines?q=crypto&pageSize=30&apiKey=${
           import.meta.env.VITE_NEWS_API_KEY
-        }`
+        }`,
+        {
+          headers: {
+            "User-Agent": "CoinScope/1.0",
+          },
+        }
       );
+
+      if (!res.ok) {
+        const errorBody = await res.text();
+        console.error("API Response Error:", errorBody);
+        return;
+      }
+
       const data = await res.json();
       setNewsList(data.articles);
     } catch (error) {
-      console.error(error);
+      console.error("Fetch Error:", error);
     }
   };
 
