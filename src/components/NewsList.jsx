@@ -6,23 +6,21 @@ const NewsList = () => {
 
   const fetchNewsData = async () => {
     try {
-      setLoading(true);
       const res = await fetch(
-        `https://gnews.io/api/v4/search?q=crypto&lang=en&max=30&apikey=${
-          import.meta.env.VITE_NEWS_API_KEY
-        }`
+        `https://gnews.io/api/v4/top-headlines?topic=crypto&token=${
+          import.meta.env.VITE_GNEWS_API_KEY
+        }&lang=en`
       );
 
       if (!res.ok) {
-        throw new Error("Failed to fetch news");
+        const errorText = await res.text();
+        throw new Error(`API Error: ${errorText}`);
       }
 
       const data = await res.json();
       setNewsList(data.articles);
     } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+      console.error("Fetch error:", error);
     }
   };
 
