@@ -19,10 +19,8 @@ const NewsList = () => {
 
       const data = await res.json();
       setNewsList(data.articles);
-      setError(null);
     } catch (error) {
       console.error(error);
-      setError("Failed to load news. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -38,10 +36,6 @@ const NewsList = () => {
         <span className="loading loading-ring loading-lg bg-[#faed26] h-24"></span>
       </div>
     );
-  }
-
-  if (error) {
-    return <div className="alert alert-error m-4">{error}</div>;
   }
 
   return (
