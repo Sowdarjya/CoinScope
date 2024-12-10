@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 const NewsList = () => {
   const [newsList, setNewsList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchNewsData = async () => {
     try {
+      setLoading(true);
+      const apiKey = import.meta.env.VITE_NEWS_API_KEY;
+
       const res = await fetch(
-        `https://gnews.io/api/v4/search?q=crypto&lang=en&country=us&max=10&apikey=${
-          import.meta.env.VITE_NEWS_API_KEY
-        }`
+        `https://gnews.io/api/v4/search?q=crypto&lang=en&country=us&max=10&apikey=${apiKey}`
       );
 
       if (!res.ok) {
@@ -19,8 +21,13 @@ const NewsList = () => {
 
       const data = await res.json();
       setNewsList(data.articles);
+      setError(null);
     } catch (error) {
       console.error("Fetch error:", error);
+      setError("Failed to fetch news. Please try again later.");
+      setNewsList([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,6 +39,14 @@ const NewsList = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <span className="loading loading-ring loading-lg bg-[#faed26] h-24"></span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        {error}
       </div>
     );
   }
