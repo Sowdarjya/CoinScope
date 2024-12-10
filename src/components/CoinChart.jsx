@@ -28,6 +28,7 @@ const CoinChart = ({ coinId }) => {
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
   const timePeriodOptions = ["1h", "3h", "12h", "24h", "7d", "30d", "3m", "1y"];
+  const { currency, currencyRefId } = useContext(CryptoCurrency);
 
   const fetchCoinPriceHistory = async () => {
     try {
@@ -40,8 +41,6 @@ const CoinChart = ({ coinId }) => {
       console.error(error);
     }
   };
-
-  const { currency, currencyRefId } = useContext(CryptoCurrency);
 
   useEffect(() => {
     fetchCoinPriceHistory();
